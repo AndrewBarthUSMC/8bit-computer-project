@@ -75,7 +75,8 @@ This is important because of the discrepancy for the $R_L$ placement between the
 
 Being a novice in this stuff, I thought this would just lead to problems. The schematic shows what looks to be a digital buffer, which I thought was just one-way. Surely applying voltage to the output just keeps the output permanently high? It turns out, if we think of it as just a bunch of resistors and transistors, the 'sinking' and 'sourcing' of current makes more sense. It's less about supplying a voltage in to get a voltage out. Instead, transistors are like switches, and all the 555 timer is doing is receiving input that will dictate whether to *switch* the output state from what it currently is. Maybe that's obvious (or conversely too deep into the rabbit hole), but I needed that clarity.
 
-> [!NOTE] If you decide to sink current instead, make sure to change the direction of the LED. If you didn't know LEDs have a certain direction...now you know. There's a straight edge on the LED to designate it.
+> [!NOTE] 
+> If you decide to sink current instead, make sure to change the direction of the LED. If you didn't know LEDs have a certain direction...now you know. There's a straight edge on the LED to designate it.
 
 What about pins $4$ and $5$? They're honestly pretty useless. Here's what the datasheet has to say about them:
 
@@ -120,7 +121,8 @@ Next is to attach GND and $V_{CC}$. At least, we'll attach pins $1$ and $8$ to t
 
 If you don't have these terminals, you can tie GND / $V_{CC}$ directly to the pins or indirectly on one of the bare rows. I did so as my first attempt, and later decided buying some boards with $+/-$ ends is worthwhile.
 
-> [!NOTE] For absolute beginners, don't pay too much attention to the colors of the jumper wires. The colors have no meanings, although I will try to implement intuitive coloring like black wire for GND connections.
+> [!NOTE] 
+> For absolute beginners, don't pay too much attention to the colors of the jumper wires. The colors have no meanings, although I will try to implement intuitive coloring like black wire for GND connections.
 
 You may recall that pins $2$ and $6$ were connected together with a capacitor $C$ to GND. That will be the connections we make next, where I will attach a $1 \ \mu F$ capacitor.
 
@@ -128,7 +130,8 @@ You may recall that pins $2$ and $6$ were connected together with a capacitor $C
 <img src='images/1-astable-2and6.png' height='250px' style='display:block; margin:auto'>
 <br />
 
-> [!NOTE] The pictorial elements in the schematics library in Python has limitations on its designs. The capacitor here could be directly from pin 2 to GND, but since it can't stretch its leads, and to keep the timer visible, an intermediate wire was added.
+> [!NOTE] 
+> The pictorial elements in the schematics library in Python has limitations on its designs. The capacitor here could be directly from pin 2 to GND, but since it can't stretch its leads, and to keep the timer visible, an intermediate wire was added.
 
 We can attach $R_A$ from $V_{CC}$ to pin $7$ and then $R_B$ from pin $7$ to pin $6$. Here, we have $R_A = 1 \ k \Omega$ and $R_B = 100 \ k \Omega$.
 
