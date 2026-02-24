@@ -286,7 +286,7 @@ Unfortunately, even in a nice Python schemdraw image, it's hard not to overlap w
 
 Can you tell I'm gradually adding more steps between each drawing as you, the reader, catch on to the basics? It's totally not because I'm getting tired of showing every individual step.
 
-We'll demonstrate the output with an LED, of course in series with a $470 \ \Omega$ resistor. Of course, we've reached the last part and I have no way of putting the LED and resistor in the SN74LS32 1Y (pin 3) spot. Don't you just love when you put a lot of work into something and it just falls apart? Instead, have fun looking at my final design:
+We'll demonstrate the output with an LED in series with a $470 \ \Omega$ resistor. Of course, we've reached the last part and I have no way of putting the LED and resistor in the SN74LS32 1Y (pin 3) spot. Don't you just love when you put a lot of work into something and it just falls apart? Instead, have fun looking at my final design:
 
 <br />
 <img src='images/1-final.png' style='display:block; margin:auto' height=300px>
