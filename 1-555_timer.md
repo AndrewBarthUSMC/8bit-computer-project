@@ -297,8 +297,11 @@ We'll demonstrate the output with an LED, of course in series with a $470 \ \Ome
 There's quite a bit we can optimize here. If we're not concerned at all with troubleshooting the clock cycles, we can remove 'Halt' and the Monostable timer completely (we've already removed 'Halt' in my design). Then there's no need for the Bistable implementation either, so we're just left with the Astable timer.
 
 From the data sheet $[2]$, we get some useful calculations of the output-high level duration and low-level duration:
+
 $$
-t_H = \ln 2 \times (R_A + R_B) \times C $$
+t_H = \ln 2 \times (R_A + R_B) \times C 
+$$
+
 $$
 t_L = \ln 2 \times R_B \times C
 $$
