@@ -1,18 +1,21 @@
 # 1 - 555 Timer
 
 ## Components
-- $1$ x Breadboard
+- $2$ x Breadboard
 - $3$ x NE555 Timer
-- $3$ x LED
+- $4$ x LED
 - $1$ x $1 \ M \Omega$ Potentiometer*
 - $4$ x $1 \ k \Omega$ Resistors
 - $1$ x $100 \ k \Omega$ Resistor
 - $1$ x $1 \ M \Omega$ Resistor
-- $3$ x $470 \ \Omega$ Resistor (or similar resistance)
+- $4$ x $470 \ \Omega$ Resistor (or similar resistance)
 - $2$ x $0.1 \ \mu F$ Capacitor
 - $3$ x $0.01 \ \mu F$ Capacitor
 - $1$ x $5 \ V$ source (I use Analog Discovery 2) 
 - $1$ x SPDT switch
+- $1$ SN74LS04 NOT chip
+- $1$ SN74LS08 AND chip
+- $1$ SN74LS32 OR chip
 - Jumper wires
 
 ###### \* I did not have a potentiometer large enough, so a resistor is sufficient here.
@@ -164,20 +167,12 @@ Truth be told, this part is optional if all we care about is a working clock. Ho
 Again, the schematic shows how to make a monostable timer:
 
 <br />
-<img src='1-monostable-schematic.png' style='display:block; margin:auto'>
+<img src='images/1-monostable-schematic.png' style='display:block; margin:auto'>
 <br />
 
 We can use a button to connect to TRIG, supplying voltage when not pressed and connecting GND when pressed. When pressed, TRIG is low, and therefore the bottom comparator is high, setting the latch (OUT high). This will also prevent any discharge of the capacitor attached to pin $6$ and pin $7$.
 
-<br />
-<img src='1-monostable-button-press.png' height='250px' style='display:block; margin:auto'>
-<br />
-
 At this point, when the button has been released, the top comparator in the timer will send a high signal. Of course, $C$ charges and it takes some time before THRESH is high, but in the meantime S and R are low, preserving the state, which is key for the concept of **debouncing** discussed later. R becomes high, enabling the transistor and connecting DISCH to GND. Eventually the top comparator will turn low, but the bottom comparator stays low, so the output remains low.
-
-<br />
-<img src='1-monostable-button-release.png' height='250px' style='display:block; margin:auto'>
-<br />
 
 You may think why not just connect a button to an LED without a timer? That would work, but the entire point is to prevent debouncing. That is, to prevent multiple signals being interpreted over one button press. The intent is to intentionally step through one clock cycle at a time. If it bounces two or more clock cycles when we attempt to debug something, it could mean undoing everything we did to get to that point to try again.
 
@@ -294,7 +289,7 @@ Can you tell I'm gradually adding more steps between each drawing as you, the re
 We'll demonstrate the output with an LED, of course in series with a $470 \ \Omega$ resistor. Of course, we've reached the last part and I have no way of putting the LED and resistor in the SN74LS32 1Y (pin 3) spot. Don't you just love when you put a lot of work into something and it just falls apart? Instead, have fun looking at my final design:
 
 <br />
-<img src='images/1-final.png' style='display:block; margin:auto'>
+<img src='images/1-final.png' style='display:block; margin:auto' height=300px>
 <br />
 
 ## Further Considerations
@@ -303,13 +298,14 @@ There's quite a bit we can optimize here. If we're not concerned at all with tro
 
 From the data sheet $[2]$, we get some useful calculations of the output-high level duration and low-level duration:
 $$
-t_H = \ln 2 \times (R_A + R_B) \times C \\
+t_H = \ln 2 \times (R_A + R_B) \times C $$
+$$
 t_L = \ln 2 \times R_B \times C
 $$
 
 It makes sense that by using a smaller capacitor, the charging/discharging times would decrease, leading to a faster clock cycle. For charging and discharging, current passes through $R_B$, but only through charging does current pass through $R_A$, and hence affecting $R_B$ is more significant.
 
-So the question becomes what is the smallest values of $R_A, R_B, C$ that remains tolerable? Well, the datasheet actually recommends not exceeding $100 \ MHz$, which is estimated under the following:
+So the question becomes what is the smallest values of $R_A, R_B, C$ that remains tolerable? Well, the datasheet actually recommends not exceeding $100 \ kHz$, which is estimated under the following:
 
 $$
 f = \frac 1T ≅ \frac {1.44}{R_A + 2R_B × C}
